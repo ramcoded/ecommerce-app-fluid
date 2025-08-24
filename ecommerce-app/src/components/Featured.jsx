@@ -1,29 +1,30 @@
 import("../css/styles.css");
 import { useEffect, useState } from "react";
 
-const productIds = [76, 78, 79];
+const productIds = [77, 78, 79];
 
 function Featured() {
   const [featuredImages, setFeaturedImages] = useState([]);
 
   useEffect(() => {
-    const fetchFeaturedImg = async () => {
+    const fetchData = async () => {
+      const featuredList = [];
       try {
-        const featuredList = [];
         for (let id of productIds) {
           const result = await fetch(
             `https://api.escuelajs.co/api/v1/products/${id}`
           );
-          if (!result.ok) throw new Error(`Failed to fetch product ${id}`);
+          if (!result.ok)
+            throw new Error(`Could not fetch featured item: ${id}`);
           const json = await result.json();
           featuredList.push(json);
         }
         setFeaturedImages(featuredList);
       } catch (error) {
-        console.error("Could not fetch FeaturedImg", error.message);
+        console.error("Could not fetch data", error.message);
       }
     };
-    fetchFeaturedImg();
+    fetchData();
   }, []);
 
   return (
@@ -43,13 +44,18 @@ function Featured() {
               className="flex flex-row flex-wrap justify-center"
             >
               <div className="flex flex-col justify-center items-center mb-20">
-                <img
-                  src={featured.images[0]}
-                  className="h-auto w-70 object-center"
-                />
-                <h3 className="text-lg font-semibold w-80 justify-center flex">
-                  {featured.title}
-                </h3>
+                <div>
+                  <img
+                    src={featured.images[0]}
+                    className="h-80 w-80 object-center rounded-xl mx-5 max-w-60 max-h-60"
+                  />
+                </div>
+                <div className="flex justify-center items-center flex-col">
+                  <h3 className="text-lg font-semibold w-80 flex mt-5 ">
+                    {featured.title}
+                  </h3>
+                  <h4 className="text-base w-80">${featured.price}</h4>
+                </div>
               </div>
             </div>
           ))}
