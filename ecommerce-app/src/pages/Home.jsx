@@ -1,6 +1,6 @@
 import Featured from "../components/Featured";
 import HomeCard from "../components/HomeCard";
-import AboutWebsite from "../components/AboutWebsite";
+import HomeShop from "../components/HomeShop";
 
 function Home() {
   return (
@@ -15,7 +15,7 @@ function Home() {
         </div>
 
         <div className="mt-20">
-          <AboutWebsite />
+          <HomeShop />
         </div>
       </div>
     </>
