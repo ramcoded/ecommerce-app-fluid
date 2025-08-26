@@ -1,0 +1,1 @@
+This is an ecommerce app for portfolio usage only using react, tailwindcss, vite as buildtool and 3rd party api such platzi. Also used emailjs for email sender of contact page and used recaptcha security.
