@@ -32,45 +32,43 @@ function Featured() {
   }, []);
 
   return (
-    <div className="flex flex-row justify-center items-start mx-50">
-      <div className="flex flex-col">
-        <div className="text-3xl font-extrabold">FEATURED ITEMS</div>
-        <div className="mb-10">
-          ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam.
-        </div>
-        <div className="flex flex-row flex-wrap justify-center items-center">
-          {loading ? (
-            <p className="text-lg font-medium text-gray-500">
-              Loading featured products...
-            </p>
-          ) : (
-            featuredImages.map((featured) => (
+    <div className="flex justify-center px-4">
+      <div className="flex flex-col w-full max-w-6xl">
+        <h1 className="text-3xl font-extrabold mb-2">FEATURED ITEMS</h1>
+        <p className="text-sm text-gray-600 mb-8 max-w-xl">
+          Handpicked favorites that blend quality, style, and everyday comfort.
+          These featured pieces are loved by our community and curated to
+          inspire your next look.
+        </p>
+
+        {loading ? (
+          <p className="text-lg font-medium text-gray-500">
+            Loading featured products...
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {featuredImages.map((featured) => (
               <div
                 key={featured.id}
-                className="flex flex-row flex-wrap justify-center"
+                className="border border-gray-200 p-4 flex flex-col items-center hover:shadow-md transition-shadow"
               >
-                <div className="flex flex-col justify-center items-center mb-20">
-                  <div>
-                    <img
-                      src={featured.images[0]}
-                      className="h-80 w-80 object-center rounded-xl mx-5 max-w-60 max-h-60"
-                    />
-                  </div>
-                  <div className="flex justify-center items-center flex-col">
-                    <h3 className="text-lg font-semibold flex mt-5">
-                      {featured.title}
-                    </h3>
-                    <h4 className="text-base w-80 text-center">
-                      ${featured.price}
-                    </h4>
-                  </div>
+                <div className="w-full aspect-square overflow-hidden rounded-md">
+                  <img
+                    src={featured.images[0]}
+                    alt={featured.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+                <h3 className="text-lg font-semibold mt-4 text-center">
+                  {featured.title}
+                </h3>
+                <h4 className="text-base text-gray-700 mt-1 text-center">
+                  ${featured.price}
+                </h4>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

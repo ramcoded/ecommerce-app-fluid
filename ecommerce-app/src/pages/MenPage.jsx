@@ -1,12 +1,12 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import Toast from "../components/Toast";
 import "../css/styles.css";
 
-function HomeShop() {
+function MenPage() {
   const { addToCart } = useContext(CartContext);
   const [loading, setLoading] = useState(true);
-  const [allProducts, setAllProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showToast, setShowToast] = useState(false);
   const itemsPerPage = 30;
@@ -14,19 +14,19 @@ function HomeShop() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const fetchAllProduct = async () => {
+    const fetchProducts = async () => {
       setLoading(true);
       try {
-        const result = await fetch(`https://api.escuelajs.co/api/v1/products`);
+        const result = await fetch("https://api.escuelajs.co/api/v1/products");
         const json = await result.json();
-        setAllProducts(json);
+        setProducts(json);
       } catch (error) {
-        console.error("Could not fetch product", error.message);
+        console.error("Could not fetch products", error.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchAllProduct();
+    fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -35,24 +35,20 @@ function HomeShop() {
     }
   }, [currentPage]);
 
-  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = allProducts.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = products.slice(startIndex, startIndex + itemsPerPage);
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   const handlePrev = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   const handleAddToCart = (product) => {
@@ -62,18 +58,18 @@ function HomeShop() {
   };
 
   return (
-    <div className="flex justify-center px-4">
+    <div className="flex justify-center px-4 pt-24">
       <div className="flex flex-col w-full max-w-6xl">
         <h1 ref={sectionRef} className="text-3xl font-extrabold mb-2">
-          BROWSE PRODUCTS
+          MEN'S SECTION
         </h1>
         <p className="text-sm text-gray-600 mb-8">
-          Discover a wide range of items from fashion to tech, all in one place.
+          Browse all available products curated for the men's section.
         </p>
 
         {loading ? (
           <p className="text-lg font-medium text-gray-500">
-            Loading all products...
+            Loading products...
           </p>
         ) : (
           <>
@@ -148,4 +144,4 @@ function HomeShop() {
   );
 }
 
-export default HomeShop;
+export default MenPage;
